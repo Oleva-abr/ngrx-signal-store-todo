@@ -14,5 +14,9 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: './todos-list.component.scss'
 })
 export class TodosListComponent {
-  store = inject(TodosStore)
+  store = inject(TodosStore);
+
+  async onAddTodo(value: string) {
+    await this.store.addTodo(value)
+  }
 }

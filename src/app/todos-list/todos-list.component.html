@@ -2,7 +2,7 @@
 
 <mat-form-field appearance="outline" class="todo-input">
   <mat-label>Enter a Todo and press Enter</mat-label>
-  <input matInput #input />
+  <input matInput #input (keyup.enter)="onAddTodo(input.value)" />
 
   <mat-icon matSuffix>edit </mat-icon>
 </mat-form-field>
