@@ -13,6 +13,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
+  title: any = "Ngrx-app"
+
   store = inject(TodosStore)
 
   ngOnInit(): void {
