@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject, viewChild } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatButtonToggleChange, MatButtonToggleGroup, MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatListModule } from '@angular/material/list';
-import { TodosStore } from '../store/todos.store';
+import { TodosFilter, TodosStore } from '../store/todos.store';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
@@ -16,8 +16,17 @@ import { CommonModule } from '@angular/common';
 })
 export class TodosListComponent {
 
+
   store = inject(TodosStore);
 
+  filter = viewChild.required(MatButtonToggleGroup);
+
+  constructor() {
+    effect(() => {
+      const filter = this.filter();
+      filter.value = this.store.filter();
+    })
+  }
 
   async onAddTodo(value: string) {
     await this.store.addTodo(value)
@@ -36,6 +45,9 @@ export class TodosListComponent {
 
   }
 
-
+  onFilterTodos(event: MatButtonToggleChange) {
+    const filter = event.value as TodosFilter;
+    this.store.updateFilter(filter);
+  }
 
 }
